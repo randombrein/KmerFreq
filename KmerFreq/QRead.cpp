@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <numeric>
 #include <iomanip>
+#include <chrono>
 #include "QRead.hpp"
 #include "Util.hpp"
 
@@ -130,6 +131,10 @@ void QRead::kmer_freq(unsigned kmersize, unsigned topcount)
     
     kmers_.clear();
     
+    //...
+    
+    auto wcts = std::chrono::system_clock::now();
+    
     while(getline(infile, line))
     {
         cout << "read-" << ++idx << ": ";
@@ -138,6 +143,13 @@ void QRead::kmer_freq(unsigned kmersize, unsigned topcount)
         
         skip_line(infile, 3);
     }
+    
+    
+    chrono::duration<double> wctduration = (chrono::system_clock::now() - wcts);
+    cout << "time spent: " << wctduration.count() << " seconds [Wall Clock]" << endl;
+    
+    //...
+    
     
     //flip occurances
     cout << endl << endl;
