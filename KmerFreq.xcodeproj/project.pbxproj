@@ -10,7 +10,6 @@
 		F75441411D5674190006935A /* CmdParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F754413F1D5674180006935A /* CmdParser.cpp */; };
 		F75441441D567A530006935A /* QRead.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F75441421D567A530006935A /* QRead.cpp */; };
 		F75441461D568EAB0006935A /* ERR037900_1.first1000.fastq in CopyFiles */ = {isa = PBXBuildFile; fileRef = F75441451D568E960006935A /* ERR037900_1.first1000.fastq */; };
-		F754414B1D56B5FD0006935A /* Util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F75441491D56B5FD0006935A /* Util.cpp */; };
 		F75441501D56C91A0006935A /* example.fastq in CopyFiles */ = {isa = PBXBuildFile; fileRef = F754414C1D56C90A0006935A /* example.fastq */; };
 		F7F6DF031D56308F00638534 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F7F6DF021D56308F00638534 /* main.cpp */; };
 /* End PBXBuildFile section */
@@ -36,7 +35,6 @@
 		F75441431D567A530006935A /* QRead.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = QRead.hpp; sourceTree = "<group>"; };
 		F75441451D568E960006935A /* ERR037900_1.first1000.fastq */ = {isa = PBXFileReference; lastKnownFileType = text; path = ERR037900_1.first1000.fastq; sourceTree = "<group>"; };
 		F75441471D5699210006935A /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		F75441491D56B5FD0006935A /* Util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Util.cpp; sourceTree = "<group>"; };
 		F754414A1D56B5FD0006935A /* Util.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Util.hpp; sourceTree = "<group>"; };
 		F754414C1D56C90A0006935A /* example.fastq */ = {isa = PBXFileReference; lastKnownFileType = text; path = example.fastq; sourceTree = "<group>"; };
 		F7F6DEFF1D56308F00638534 /* KmerFreq */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = KmerFreq; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -84,7 +82,6 @@
 			children = (
 				F75441471D5699210006935A /* README.md */,
 				F7F6DF021D56308F00638534 /* main.cpp */,
-				F75441491D56B5FD0006935A /* Util.cpp */,
 				F754414A1D56B5FD0006935A /* Util.hpp */,
 				F75441401D5674190006935A /* CmdParser.hpp */,
 				F754413F1D5674180006935A /* CmdParser.cpp */,
@@ -154,7 +151,6 @@
 				F7F6DF031D56308F00638534 /* main.cpp in Sources */,
 				F75441441D567A530006935A /* QRead.cpp in Sources */,
 				F75441411D5674190006935A /* CmdParser.cpp in Sources */,
-				F754414B1D56B5FD0006935A /* Util.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
