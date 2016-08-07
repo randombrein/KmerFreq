@@ -357,7 +357,7 @@ void QRead::kmer_freq(unsigned kmersize, unsigned topcount)
     kmers_.clear();
     
     // start algo. timer
-    cout << "# running..." << endl;
+    cout << "# running algorithm..." << endl;
     auto wcts = std::chrono::system_clock::now();
     
     /*
@@ -389,7 +389,7 @@ void QRead::kmer_freq(unsigned kmersize, unsigned topcount)
     
     // report topcount frequent k-mers
     cout << endl << "# showing top " << topcount << " frequent " << kmersize << "-mers;" << endl;
-    cout << "-------------------------------------------------------------" << endl;
+    cout << "------------------------------------------------------" << endl;
     int idx = 0;
     cout.precision(2);
     cout.setf(ios::fixed);
