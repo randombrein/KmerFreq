@@ -1,8 +1,6 @@
 #include <iostream>
-#include <fstream>
 #include <algorithm>
 #include <numeric>
-#include <iomanip>
 #include <chrono>
 
 #include <stdlib.h>
@@ -17,9 +15,8 @@
 
 using namespace std;
 
-#define MAXSIZE_READ    (256)
 #define PAGING          (1)
-#define handle_error(msg) do { perror(msg); exit(EXIT_FAILURE); } while (0)
+#define MAXSIZE_READ    (256)
 
 
 
@@ -112,17 +109,17 @@ void QRead::qrange_task(char *map, size_t start, size_t end, unsigned kmersize)
     unsigned long cur = 0;
     char buf_line[MAXSIZE_READ+1];
     
-    cout << "starting task: " << this_thread::get_id() << "range - " << start << ":" << end << endl;
     
     char block_offset = 0;
-    short line_offset = 0;
-    int idx_read = 0;
+    int line_offset = 0;
     for(offset = start; offset < end; ++offset)
     {
         cur = map[offset];
         if(cur == '\n')
         {
             block_offset = (block_offset + 1) % 4;
+            
+            buf_line[max(MAXSIZE_READ, line_offset)] = '\0';
             line_offset = -1;
         }
         else
@@ -135,7 +132,7 @@ void QRead::qrange_task(char *map, size_t start, size_t end, unsigned kmersize)
             
             if(line_offset == 0)
             {
-                memset(buf_line, '\0', (MAXSIZE_READ+1));
+                //memset(buf_line, '\0', (MAXSIZE_READ+1));
             }
             
             if(line_offset > MAXSIZE_READ)
@@ -147,15 +144,12 @@ void QRead::qrange_task(char *map, size_t start, size_t end, unsigned kmersize)
         }
         else if(block_offset == 2 && line_offset == 0) // sequence read
         {
+            
             string line(buf_line);
-#if DEBUG
-            cout << "+ read-" << ++idx_read << ": " << flush;
-            cout << line << endl;
-#endif
             process_read(line, kmersize);
         }
         else {
-            //TODO: determistic skip?
+            //TODO: determistic skip? (no guarantee for read lenghts)
         }
     }
     
@@ -217,10 +211,8 @@ void QRead::generate_paged(unsigned kmersize)
     {
         size_t start = *it;
         size_t end = *(it+1);
-        cout << "tasking range: " << start << ":" << end << endl;
         
         tasks.emplace_back(&QRead::qrange_task, this, map, start, end, kmersize);
-        
     }
     for (auto& t : tasks) {
         t.join();
@@ -231,7 +223,6 @@ void QRead::generate_paged(unsigned kmersize)
     
 
 }
-
 
 
 #pragma mark - Public

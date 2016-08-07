@@ -3,6 +3,9 @@
 #include <map>
 #include <fstream>
 
+#define handle_error(msg) do { perror(msg); exit(EXIT_FAILURE); } while (0)
+
+
 class Util {
 
 public:
@@ -23,6 +26,7 @@ public:
         return dst;
     }
 
+    //TODO: remove
     static size_t count_line(std::istream &is)
     {
         // skip when bad
@@ -49,7 +53,7 @@ public:
         return line_cnt;
     }
 
-    static  void skip_line(std::ifstream& fs, int num=1)
+    static void skip_line(std::ifstream& fs, int num=1)
     {
         for(int i=0; i<num; ++i)
             fs.ignore(std::numeric_limits<std::streamsize>::max(), '\n' );
