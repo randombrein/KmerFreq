@@ -1,5 +1,6 @@
 #include <iostream>
 #include <algorithm>
+#include <sstream>
 #include <numeric>
 #include <chrono>
 
@@ -13,11 +14,12 @@
 #include "Util.hpp"
 
 
-using namespace std;
+namespace KmerFreq {
 
 #define PAGING          (1)
 #define MAXSIZE_READ    (256)
 
+using namespace std;
 
 
 void QRead::check_file()
@@ -135,9 +137,11 @@ void QRead::qrange_task(char *map, size_t start, size_t end, unsigned kmersize)
                 //memset(buf_line, '\0', (MAXSIZE_READ+1));
             }
             
-            if(line_offset > MAXSIZE_READ)
+            if(line_offset >= MAXSIZE_READ)
             {
-                handle_error("MAXSIZE_READ reached!");
+                stringstream ss;
+                ss << "[" << this_thread::get_id() << "] " << "MAXSIZE_READ reached, quiting!";
+                handle_error(ss.str().c_str());
             }
             buf_line[line_offset] = (char)cur;
             
@@ -201,7 +205,7 @@ void QRead::generate_paged(unsigned kmersize)
     char *map = (char*)mmap(NULL, file_len, PROT_READ, MAP_SHARED, fd, 0);
     if (map == MAP_FAILED) {
         close(fd);
-        handle_error("Error mmapping the file");
+        handle_error("error mmapping the file!");
     }
     
     
@@ -254,7 +258,7 @@ void QRead::kmer_freq(unsigned kmersize, unsigned topcount)
 #endif
 
     //flip occurances
-    auto dst = Util::flip_map(kmers_);
+    auto bi_kmers = Util::flip_map(kmers_);
     
     chrono::duration<double> wctduration = (chrono::system_clock::now() - wcts);
     cout << "# time spent: " << wctduration.count() << " secs." << endl;
@@ -265,13 +269,13 @@ void QRead::kmer_freq(unsigned kmersize, unsigned topcount)
         return acc + p.second;
     });
     cout << "# total kmer count: " << occur_sum << endl;
-    cout << endl << "# showing top " << topcount << " frequent kmer;" << endl;
+    cout << endl << "# showing top-" << topcount << " frequent kmer;" << endl;
     cout << "-------------------------------------------------------------" << endl;
     
     int idx = 0;
     cout.precision(2);
     cout.setf(ios::fixed);
-    for(const auto& kv: dst)
+    for(const auto& kv: bi_kmers)
     {
         cout << kv.second << " :\t %" << 100*kv.first/static_cast<double>(occur_sum) << " - " << kv.first << endl;
         if(++idx == topcount)
@@ -281,3 +285,6 @@ void QRead::kmer_freq(unsigned kmersize, unsigned topcount)
     }
     
 }
+ 
+/* end namespace KmerFreq */
+};

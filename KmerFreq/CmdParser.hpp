@@ -4,6 +4,9 @@
 #include <map>
 #include <exception>
 
+namespace KmerFreq {
+
+    
 class CmdParserException : public std::exception
 {
 public:
@@ -33,6 +36,10 @@ private:
     
     void _trim_prefix(std::string& label) const throw(CmdParserException&);
     void _validate() const;
+};
+  
+    
+/* end namespace KmerFreq */
 };
 
 

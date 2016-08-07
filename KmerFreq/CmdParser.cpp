@@ -3,10 +3,12 @@
 
 using namespace std;
 
+namespace KmerFreq {
+
 const std::string CmdParser::ARG_FILENAME = "filename";
 const std::string CmdParser::ARG_KMERSIZE = "kmersize";
 const std::string CmdParser::ARG_TOPCOUNT = "topcount";
-const std::string CmdParser::USAGE = "usage : kmer_freq --filename <path> --kmersize <size> --topcount <count>"; //TODO
+const std::string CmdParser::USAGE = "usage : kmer_freq --filename <path> --kmersize <size> --topcount <count>"; 
 
 CmdParser::CmdParser(int argc, char** argv) throw(CmdParserException&)
 {
@@ -73,3 +75,6 @@ const std::map<std::string, std::string>& CmdParser::get() const
 {
     return args_;
 }
+    
+/* end namespace KmerFreq */
+};

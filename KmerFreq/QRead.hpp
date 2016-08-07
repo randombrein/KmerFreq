@@ -5,6 +5,8 @@
 #include <vector>
 #include <thread>
 
+namespace KmerFreq {
+
 class QRead
 {
 public:
@@ -33,4 +35,7 @@ private:
     void generate(unsigned kmersize);
     void generate_paged(unsigned kmersize);
     
+};
+
+/* end namespace KmerFreq */
 };

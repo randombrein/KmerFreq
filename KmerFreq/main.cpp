@@ -6,6 +6,7 @@
 #include "QRead.hpp"
 
 using namespace std;
+using namespace KmerFreq;
 
 int main(int argc, char** argv)
 {
