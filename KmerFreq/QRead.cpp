@@ -29,7 +29,7 @@ namespace KmerFreq {
 // Flag to enable paged FASTQ file reading
 #define PAGING          (1)
 // Maxsize size for a sequence-read lenght
-#define MAXSIZE_READ    (256) //TODO: switch to batch realloc()!
+#define MAXSIZE_READ    (256)
 
 using namespace std;
 
@@ -162,7 +162,7 @@ vector<size_t> QRead::qoffset_ranges(char *map, size_t file_len, unsigned n) con
     @param kmersize - kmer size for processing lines
  
  */
-void QRead::qrange_task(char *map, size_t start, size_t end, unsigned kmersize)
+int QRead::qrange_task(char *map, size_t start, size_t end, unsigned kmersize)
 {
     unsigned long offset = 0;  // map offset
     char block_offset = 0;  // FASTQ file block(4 lines) offset
@@ -192,17 +192,21 @@ void QRead::qrange_task(char *map, size_t start, size_t end, unsigned kmersize)
         // sequcne-read line
         if(block_offset == 1)
         {
+            /*
             if(line_offset == 0)
             {
-                //memset(buf_line, '\0', (MAXSIZE_READ+1));
+                memset(buf_line, '\0', (MAXSIZE_READ+1));
             }
+            */
+             
             
+            //TODO: switch to batch'd realloc()!
             if(line_offset >= MAXSIZE_READ)
             {
-                //TODO: thread exceptions
                 stringstream ss;
-                ss << "[" << this_thread::get_id() << "] " << "MAXSIZE_READ reached, quiting!";
-                fatal_error(ss.str().c_str());
+                ss << "[" << this_thread::get_id() << "] " << "MAXSIZE_READ reached!";
+                
+                throw out_of_range(ss.str());
             }
             
             // update line buffer
@@ -220,6 +224,8 @@ void QRead::qrange_task(char *map, size_t start, size_t end, unsigned kmersize)
             //TODO: determistic offset skip? (no guarantee for read lengths)
         }
     }
+    
+    return EXIT_SUCCESS;
 }
 
 /**
@@ -286,7 +292,7 @@ void QRead::generate_paged(unsigned kmersize)
     
     // calcuate offset ranges for tasts
     auto ranges = qoffset_ranges(map, file_len, cores_);
-    vector<thread> tasks;
+    range_threads_.clear();
     
     // generate range tasts
     for(auto it = ranges.begin(); it != ranges.end()-1; ++it)
@@ -298,19 +304,30 @@ void QRead::generate_paged(unsigned kmersize)
         /*
          * range tasks with ranges to read FASTQ file concurrently
          */
-        tasks.emplace_back(&QRead::qrange_task, this, map, start, end, kmersize);
+        future<int> fu = async(launch::async, &QRead::qrange_task, this, map, start, end, kmersize);
+        range_threads_.emplace_back(std::move(fu));
     }
     
-    // join range tasts
-    for (auto& t : tasks) {
-        t.join();
+    try
+    {
+        // wait for range tasts
+        for (auto& fu : range_threads_) {
+            fu.get();  // ### std::future trick to propagate exception ###
+        }
     }
+    catch(const exception& e)
+    {
+        munmap(map, file_len);
+        close(fd);
+        
+        fatal_error(e.what());
+    }
+    
     
     // unmap & close handle
     munmap(map, file_len);
     close(fd);
     
-
 }
 
 

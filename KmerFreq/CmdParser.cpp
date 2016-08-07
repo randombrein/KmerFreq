@@ -55,7 +55,7 @@ CmdParser::CmdParser(int argc, char** argv) throw(CmdParserException&)
     }
     else
     {
-        throw CmdParserException(CmdParser::USAGE.c_str());
+        throw CmdParserException(CmdParser::USAGE);
     }
     
     // validate command arguments
@@ -82,7 +82,7 @@ void CmdParser::_trim_prefix(string& label) const throw(CmdParserException&)
         ss << "invalid label: `" << "`" << endl;
         ss << CmdParser::USAGE << endl;
         
-        throw CmdParserException(ss.str().c_str());
+        throw CmdParserException(ss.str());
     }
     
     label = label.substr(begin);
@@ -99,7 +99,7 @@ void CmdParser::_validate() const
        args_.find(ARG_TOPCOUNT) == args_.end())
     {
 
-        throw CmdParserException(CmdParser::USAGE.c_str());
+        throw CmdParserException(CmdParser::USAGE);
     }
 }
 

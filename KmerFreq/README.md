@@ -6,7 +6,7 @@ http://stackoverflow.com/a/10677087
 
 #TODO
 + documenting
-- thread exceptions
++ thread exceptions
 - make
 - test
 

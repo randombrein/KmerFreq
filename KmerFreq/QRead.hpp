@@ -14,6 +14,7 @@
 #include <unordered_map>
 #include <vector>
 #include <thread>
+#include <future>
 
 namespace KmerFreq {
 
@@ -36,12 +37,13 @@ private:
     std::once_flag check_file_flag_;  // check file once_flag
     std::mutex kmers_mutex_;  // kmers_ map mutex
     std::unordered_map<std::string, unsigned> kmers_;  // k-mers occurances map
+    std::vector<std::future<int>> range_threads_;  // file range process threads
     
     
     void check_file(void);
     void process_read(const std::string &line, unsigned kmersize);
     std::vector<size_t> qoffset_ranges(char *map, size_t file_len, unsigned n) const;
-    void qrange_task(char *map, size_t start, size_t end, unsigned kmersize);
+    int qrange_task(char *map, size_t start, size_t end, unsigned kmersize);
     void generate(unsigned kmersize);
     void generate_paged(unsigned kmersize);
     

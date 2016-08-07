@@ -20,6 +20,7 @@ namespace KmerFreq {
 class CmdParserException : public std::exception
 {
 public:
+    CmdParserException(const std::string& err_message) : err_message_(err_message.c_str()){}
     CmdParserException(const char* err_message) : err_message_(err_message){}
     
     const char* what() const throw() { return err_message_; }
