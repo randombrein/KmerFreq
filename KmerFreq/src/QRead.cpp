@@ -149,7 +149,7 @@ vector<size_t> QRead::qoffset_ranges(char *map, size_t file_len, unsigned n) con
     //last offset
     offsets.push_back(file_len);
     
-    return std::move(offsets);
+    return offsets;
 }
 
 /**

@@ -15,13 +15,14 @@ CXX=g++
 RM=rm -f
 MKDIR_P = mkdir -p
 CPPFLAGS=-Wall -std=gnu++11 -O3 -I$(INC_DIR)
-LDFLAGS=$(shell root-config --ldflags)
-LDLIBS=$(shell root-config --libs)
+LDFLAGS=
+LDLIBS=
 
 GREEN=\033[1;32m
 YELLOW=\033[1;33m
 NC=\033[1;0m
 
+all : $(BIN_DIR)/$(TARGET)
 
 $(BIN_DIR)/$(TARGET) : $(OBJS)
 	@echo "$(YELLOW)linking...$(NC)"
@@ -29,8 +30,12 @@ $(BIN_DIR)/$(TARGET) : $(OBJS)
 	@echo "$(GREEN)finished!$(NC)"
 
 $(BIN_DIR)/%.o : $(SRC_DIR)/%.cpp
-	@echo "$(YELLOW)compiling...$(NC)"
 	$(CXX) $(CPPFLAGS) -c $< -o $@
+
+$(OBJS): | $(BIN_DIR)
+
+$(BIN_DIR):
+	test -d $(BIN_DIR) || $(MKDIR_P) $(BIN_DIR)
 
 depend: .depend
 
@@ -44,10 +49,6 @@ run : $(BIN_DIR)/$(TARGET)
 	@echo "$(GREEN)running...$(NC)"
 	$(BIN_DIR)/$(TARGET) --filename res/ERR037900_1.first1000.fastq --kmersize 30 --topcount 25
 
-
-${BIN_DIR}:
-	$(MKDIR_P) $(BIN_DIR)
-
 clean :
 	$(RM) $(OBJS) $(BIN)/$(TARGET)
 
@@ -55,3 +56,4 @@ dist-clean : clean
 	$(RM) *~ .depend
 
 include .depend
+
