@@ -11,6 +11,7 @@
 		F75441441D567A530006935A /* QRead.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F75441421D567A530006935A /* QRead.cpp */; };
 		F75441461D568EAB0006935A /* ERR037900_1.first1000.fastq in CopyFiles */ = {isa = PBXBuildFile; fileRef = F75441451D568E960006935A /* ERR037900_1.first1000.fastq */; };
 		F754414B1D56B5FD0006935A /* Util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F75441491D56B5FD0006935A /* Util.cpp */; };
+		F75441501D56C91A0006935A /* example.fastq in CopyFiles */ = {isa = PBXBuildFile; fileRef = F754414C1D56C90A0006935A /* example.fastq */; };
 		F7F6DF031D56308F00638534 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F7F6DF021D56308F00638534 /* main.cpp */; };
 /* End PBXBuildFile section */
 
@@ -21,6 +22,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 16;
 			files = (
+				F75441501D56C91A0006935A /* example.fastq in CopyFiles */,
 				F75441461D568EAB0006935A /* ERR037900_1.first1000.fastq in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -36,6 +38,7 @@
 		F75441471D5699210006935A /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		F75441491D56B5FD0006935A /* Util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Util.cpp; sourceTree = "<group>"; };
 		F754414A1D56B5FD0006935A /* Util.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Util.hpp; sourceTree = "<group>"; };
+		F754414C1D56C90A0006935A /* example.fastq */ = {isa = PBXFileReference; lastKnownFileType = text; path = example.fastq; sourceTree = "<group>"; };
 		F7F6DEFF1D56308F00638534 /* KmerFreq */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = KmerFreq; sourceTree = BUILT_PRODUCTS_DIR; };
 		F7F6DF021D56308F00638534 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -51,6 +54,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F75441511D56C9200006935A /* res */ = {
+			isa = PBXGroup;
+			children = (
+				F75441451D568E960006935A /* ERR037900_1.first1000.fastq */,
+				F754414C1D56C90A0006935A /* example.fastq */,
+			);
+			name = res;
+			sourceTree = "<group>";
+		};
 		F7F6DEF61D56308F00638534 = {
 			isa = PBXGroup;
 			children = (
@@ -78,7 +90,7 @@
 				F754413F1D5674180006935A /* CmdParser.cpp */,
 				F75441431D567A530006935A /* QRead.hpp */,
 				F75441421D567A530006935A /* QRead.cpp */,
-				F75441451D568E960006935A /* ERR037900_1.first1000.fastq */,
+				F75441511D56C9200006935A /* res */,
 			);
 			path = KmerFreq;
 			sourceTree = "<group>";

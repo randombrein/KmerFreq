@@ -64,7 +64,7 @@ void CmdParser::_validate() const
        args_.find(ARG_KMERSIZE) == args_.end() ||
        args_.find(ARG_TOPCOUNT) == args_.end())
     {
-        stringstream ss;
+
         throw CmdParserException(CmdParser::USAGE.c_str());
     }
 }
